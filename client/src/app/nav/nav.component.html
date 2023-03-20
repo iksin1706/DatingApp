@@ -1,21 +1,23 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">{{title}}</a>
-        <ul class="navbar-nav me-auto mb-2 mb-md-0" *ngIf="accountService.currentUser$ | async">
+        <a class="navbar-brand" routerLink="/" routerLinkActive="active">{{title}}</a>
+        <ul class="navbar-nav me-auto mb-2 mb-md-0" >
+            <ng-container *ngIf="accountService.currentUser$ | async">
             <li class="nav-item">
-                <a class="nav-link" href="#">Matches</a>
+                <a class="nav-link" routerLink="/members" routerLinkActive="active">Matches</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Lists</a>
+                <a class="nav-link" routerLink="/lists" routerLinkActive="active">Lists</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Messeges</a>
+                <a class="nav-link" routerLink="/messeges" routerLinkActive="active">Messeges</a>
             </li>
+        </ng-container>
         </ul>
 
-        <div class="dropdown" *ngIf="accountService.currentUser$ | async" dropdown>
-            <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle>Welcome user </a>
-            <div class="dropdown-menu mt-3" *dropdownMenu>
+        <div class="dropdown me-3" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+            <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle>Welcome {{user.username}} </a>
+            <div class="dropdown-menu mt-2" *dropdownMenu>
                 <a href="" class="dropdown-item">Edit Profile</a>
                 <a href="" class="dropdown-item" (click)="logout()">Logout</a>
             </div>
