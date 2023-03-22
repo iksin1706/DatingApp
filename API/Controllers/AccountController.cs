@@ -19,10 +19,11 @@ namespace API.Controllers
     {
         private readonly DataContext _context;
         private readonly ITokenService _tokenService;
-        public AccountController(DataContext context,ITokenService tokenService)
+        private readonly DataContext _dataContext;
+        public AccountController(DataContext dataContext,ITokenService tokenService)
         {
-            this._tokenService = tokenService;
-            _context=context;  
+            this._dataContext = dataContext;
+            this._tokenService = tokenService; 
         }
         [HttpPost("register")] //POST api/account/register
         public async Task<ActionResult<UserDto>> Register(RegisterDTO registerDTO){
