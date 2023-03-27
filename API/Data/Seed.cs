@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.TraceSource;
 
 namespace API.Data
 {
@@ -24,6 +25,7 @@ namespace API.Data
                 user.UserName = user.UserName.ToLower();
                 user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("Pa$$w0rd"));
                 user.PasswordSalt = hmac.Key;
+                user.Photos[0].isMain=true;
 
                 context.Users.Add(user);
             }

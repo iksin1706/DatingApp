@@ -1,0 +1,47 @@
+$transition-time: 350ms;
+
+.card{
+    transition: $transition-time ease-out;
+
+    & img{
+        transform: scale(1);
+        transition: $transition-time ease-out;
+        opacity: 0.7;
+    }
+    &:hover{
+        transition: $transition-time ease-out;
+        transform: translateY(-1rem);
+        box-shadow: 0px 5px 20px #f20e6189;
+        cursor: pointer;
+        & img{
+        transform: scale(1.2);
+        transition: $transition-time ease-out;
+        opacity: 0.7;
+        }
+    }
+}
+
+
+.card-img-wrapper{
+    overflow: hidden;
+    position: relative;
+   
+
+    &:hover .member-icons{
+        bottom: 0;
+        opacity: 1;
+        transition: $transition-time;
+    }
+
+}
+
+.member-icons{
+    position: absolute;
+    bottom: -30%;
+    left: 0;
+    right: 0;
+    margin-left:auto;
+    margin-right: auto;
+    opacity: 0;
+    transition: $transition-time;
+}

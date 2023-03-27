@@ -19,10 +19,9 @@ namespace API.Controllers
     {
         private readonly DataContext _context;
         private readonly ITokenService _tokenService;
-        private readonly DataContext _dataContext;
-        public AccountController(DataContext dataContext,ITokenService tokenService)
+        public AccountController(DataContext context,ITokenService tokenService)
         {
-            this._dataContext = dataContext;
+            this._context = context;
             this._tokenService = tokenService; 
         }
         [HttpPost("register")] //POST api/account/register
@@ -48,6 +47,7 @@ namespace API.Controllers
         }
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login (LoginDto loginDto){
+
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.UserName);
 
             if(user==null) return Unauthorized("Invalid username");
