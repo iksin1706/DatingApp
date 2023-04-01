@@ -19,8 +19,10 @@ namespace API.Controllers
     {
         private readonly DataContext _context;
         private readonly ITokenService _tokenService;
-        public AccountController(DataContext context,ITokenService tokenService)
+        private readonly IUserRepository _userRepository;
+        public AccountController(DataContext context,ITokenService tokenService,IUserRepository userRepository)
         {
+            this._userRepository = userRepository;
             this._context = context;
             this._tokenService = tokenService; 
         }
@@ -38,7 +40,8 @@ namespace API.Controllers
             await _context.SaveChangesAsync();
             return new  UserDto{
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user),
+                PhotoUrl = user.Photos.FirstOrDefault(x=>x.isMain)?.Url
             };
         }
 
@@ -47,8 +50,7 @@ namespace API.Controllers
         }
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login (LoginDto loginDto){
-
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.UserName);
+            var user = await _userRepository.GetUserByUsernameAsync(loginDto.UserName);
 
             if(user==null) return Unauthorized("Invalid username");
 
@@ -61,7 +63,8 @@ namespace API.Controllers
             }
                 return new  UserDto{
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user),
+                PhotoUrl = user.Photos.FirstOrDefault(x=>x.isMain)?.Url
             };
         }
 
