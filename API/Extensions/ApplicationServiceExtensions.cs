@@ -22,6 +22,7 @@ namespace API.Extensions
             {
                 opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
             });
+            
             services.AddCors();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<ITokenService, TokenService>();
@@ -30,6 +31,7 @@ namespace API.Extensions
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
             services.AddScoped<IPhotoService,PhotoService>();
             services.AddScoped<LogUserActivity>();
+            services.AddScoped<ILikesRepository, LikesRepository>();
             return services;
         }
     }
