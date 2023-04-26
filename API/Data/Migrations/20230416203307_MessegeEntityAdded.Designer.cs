@@ -3,6 +3,7 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230416203307_MessegeEntityAdded")]
+    partial class MessegeEntityAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.3");
@@ -68,7 +71,7 @@ namespace API.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("API.entities.Message", b =>
+            modelBuilder.Entity("API.entities.Messege", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -80,7 +83,7 @@ namespace API.Data.Migrations
                     b.Property<DateTime?>("DateRead")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("MessageSent")
+                    b.Property<DateTime>("MessegeSent")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("RecipientDeleted")
@@ -88,9 +91,6 @@ namespace API.Data.Migrations
 
                     b.Property<int>("RecipientId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("RecipientUsername")
-                        .HasColumnType("TEXT");
 
                     b.Property<bool>("SenderDeleted")
                         .HasColumnType("INTEGER");
@@ -107,7 +107,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messeges");
                 });
 
             modelBuilder.Entity("API.entities.Photo", b =>
@@ -150,18 +150,18 @@ namespace API.Data.Migrations
                     b.ToTable("Likes");
                 });
 
-            modelBuilder.Entity("API.entities.Message", b =>
+            modelBuilder.Entity("API.entities.Messege", b =>
                 {
                     b.HasOne("API.entities.AppUser", "Recipient")
-                        .WithMany("MessagesReceived")
+                        .WithMany("MessegesReceived")
                         .HasForeignKey("RecipientId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("API.entities.AppUser", "Sender")
-                        .WithMany("MessagesSent")
+                        .WithMany("MessegesSent")
                         .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Recipient");
@@ -205,9 +205,9 @@ namespace API.Data.Migrations
 
                     b.Navigation("LikedUsers");
 
-                    b.Navigation("MessagesReceived");
+                    b.Navigation("MessegesReceived");
 
-                    b.Navigation("MessagesSent");
+                    b.Navigation("MessegesSent");
 
                     b.Navigation("Photos");
                 });

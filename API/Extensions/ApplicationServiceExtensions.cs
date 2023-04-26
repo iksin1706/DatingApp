@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.Data.Migrations;
 using API.Helpers;
 using API.Interfaces;
 using API.Services;
@@ -22,7 +23,7 @@ namespace API.Extensions
             {
                 opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
             });
-            
+
             services.AddCors();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<ITokenService, TokenService>();
@@ -31,6 +32,7 @@ namespace API.Extensions
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
             services.AddScoped<IPhotoService,PhotoService>();
             services.AddScoped<LogUserActivity>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<ILikesRepository, LikesRepository>();
             return services;
         }
