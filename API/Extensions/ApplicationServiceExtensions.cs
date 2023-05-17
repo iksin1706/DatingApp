@@ -7,6 +7,7 @@ using API.Data.Migrations;
 using API.Helpers;
 using API.Interfaces;
 using API.Services;
+using API.SignalR;
 using CloudinaryDotNet;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,6 +35,9 @@ namespace API.Extensions
             services.AddScoped<LogUserActivity>();
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<ILikesRepository, LikesRepository>();
+            services.AddSignalR();
+            services.AddSingleton<PresenceTracker>();
+
             return services;
         }
     }

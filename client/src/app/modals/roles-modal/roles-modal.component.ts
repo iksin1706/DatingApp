@@ -9,7 +9,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class RolesModalComponent {
   username = '';
-  avaliableRoles: any[] = [];
+  availableRoles: any[] = [];
   selectedRoles: any[] = [];
 
   constructor(public bsModalRef: BsModalRef){ }

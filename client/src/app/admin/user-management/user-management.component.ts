@@ -12,7 +12,7 @@ import { AdminService } from 'src/app/_services/admin.service';
 export class UserManagementComponent implements OnInit {
   users: User[]=[];
   bsModalRef: BsModalRef<RolesModalComponent> = new BsModalRef<RolesModalComponent>();
-  avaliableRoles = [
+  availableRoles = [
     'Admin',
     'Moderator',
     'Member'
@@ -37,15 +37,15 @@ export class UserManagementComponent implements OnInit {
       class: 'modal-dialog-centered',
       initialState: {
         username: user.username,
-        avaliableRoles: this.avaliableRoles,
+        availableRoles: this.availableRoles,
         selectedRoles: [...user.roles]
       }
     }
-    this.bsModalRef = this.modalService.show(RolesModalComponent,config);
+    this.bsModalRef = this.modalService.show(RolesModalComponent, config);
     this.bsModalRef.onHide?.subscribe({
       next: () => {
         const selectedRoles = this.bsModalRef.content?.selectedRoles;
-        if(this.arrayEqual(selectedRoles!,user.roles)) {
+        if (!this.arrayEqual(selectedRoles!, user.roles)) {
           this.adminService.updateUserRoles(user.username, selectedRoles!).subscribe({
             next: roles => user.roles = roles
           })
@@ -54,7 +54,7 @@ export class UserManagementComponent implements OnInit {
     })
   }
 
-  private arrayEqual(arr1: any[], arr2: any[]){
+  private arrayEqual(arr1: any[], arr2: any[]) {
     return JSON.stringify(arr1.sort()) === JSON.stringify(arr2.sort());
   }
 
